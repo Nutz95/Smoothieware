@@ -118,8 +118,8 @@ void MainMenuScreen::display_menu_line(uint16_t line)
 {
     switch ( line ) {
         case 0: THEPANEL->lcd->printf("Watch"); break;
-        case 1: if(THEKERNEL->is_halted()) THEPANEL->lcd->printf("Clear HALT"); else THEPANEL->lcd->printf(THEPANEL->is_playing() ? "Abort" : "Play"); break;
-        case 2: THEPANEL->lcd->printf("Jog"); break;
+        case 1: if(THEKERNEL->is_halted()) THEPANEL->lcd->printf("Clear HALT"); else THEPANEL->lcd->printf(THEPANEL->is_playing() ? "Abort" : "Print"); break;
+        case 2: THEPANEL->lcd->printf("Adjust"); break;
         case 3: THEPANEL->lcd->printf("Prepare"); break;
         case 4: THEPANEL->lcd->printf("Custom"); break;
         case 5: THEPANEL->lcd->printf("Configure"); break;

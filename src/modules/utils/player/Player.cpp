@@ -362,7 +362,7 @@ void Player::abort_command( string parameters, StreamOutput *stream )
         stream->printf("Not currently playing\r\n");
         return;
     }
-    suspended= false;
+    suspended = false;
     playing_file = false;
     played_cnt = 0;
     file_size = 0;

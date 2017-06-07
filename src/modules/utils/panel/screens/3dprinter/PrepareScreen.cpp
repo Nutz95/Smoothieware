@@ -39,7 +39,7 @@ void PrepareScreen::on_enter()
 {
     THEPANEL->enter_menu_mode();
     // if no heaters or extruder then don't show related menu items
-    THEPANEL->setup_menu((this->extruder_screen != nullptr) ? 9 : 5);
+    THEPANEL->setup_menu((this->extruder_screen != nullptr) ? 13 : 5);
     this->refresh_menu();
 }
 
@@ -58,14 +58,18 @@ void PrepareScreen::display_menu_line(uint16_t line)
     switch ( line ) {
         case 0: THEPANEL->lcd->printf("Back"           ); break;
         case 1: THEPANEL->lcd->printf("Home All Axes"  ); break;
-        case 2: THEPANEL->lcd->printf("Set Home"       ); break;
-        case 3: THEPANEL->lcd->printf("Set Z0"         ); break;
-        case 4: THEPANEL->lcd->printf("Motors off"     ); break;
+		case 2: THEPANEL->lcd->printf("Home X"         ); break;
+		case 3: THEPANEL->lcd->printf("Home Y"         ); break;
+        case 4: THEPANEL->lcd->printf("Reset Home Pos" ); break;
+        case 5: THEPANEL->lcd->printf("Set Z0"         ); break;
+        case 6: THEPANEL->lcd->printf("Motors off"     ); break;
         // these won't be accessed if no heaters or extruders
-        case 5: THEPANEL->lcd->printf("Pre Heat"       ); break;
-        case 6: THEPANEL->lcd->printf("Cool Down"      ); break;
-        case 7: THEPANEL->lcd->printf("Extruder..."    ); break;
-        case 8: THEPANEL->lcd->printf("Set Temperature"); break;
+        case 7: THEPANEL->lcd->printf("Pre Heat PLA"       ); break;
+		case 8: THEPANEL->lcd->printf("Pre Heat ABS"       ); break;
+		case 9: THEPANEL->lcd->printf("Pre Heat PETG"       ); break;
+        case 10: THEPANEL->lcd->printf("Cool Down"      ); break;
+        case 11: THEPANEL->lcd->printf("Extruder..."    ); break;
+        case 12: THEPANEL->lcd->printf("Set Temperature"); break;
     }
 }
 
@@ -74,13 +78,17 @@ void PrepareScreen::clicked_menu_entry(uint16_t line)
     switch ( line ) {
         case 0: THEPANEL->enter_screen(this->parent); break;
         case 1: send_command("G28"); break;
-        case 2: send_command("G92 X0 Y0 Z0"); break;
-        case 3: send_command("G92 Z0"); break;
-        case 4: send_command("M84"); break;
-        case 5: this->preheat(); break;
-        case 6: this->cooldown(); break;
-        case 7: THEPANEL->enter_screen(this->extruder_screen); break;
-        case 8: setup_temperature_screen(); break;
+		case 2: send_command("G28 X0"); break;
+		case 3: send_command("G28 Y0"); break;
+        case 4: send_command("G92 X0 Y0 Z0"); break;
+        case 5: send_command("G92 Z0"); break;
+        case 6: send_command("M84"); break;
+        case 7: this->preheat(); break;
+		case 8: this->preheat_abs(); break;
+		case 9: this->preheat_petg(); break;
+        case 10: this->cooldown(); break;
+        case 11: THEPANEL->enter_screen(this->extruder_screen); break;
+        case 12: setup_temperature_screen(); break;
     }
 }
 
@@ -89,6 +97,20 @@ void PrepareScreen::preheat()
     float t = THEPANEL->get_default_hotend_temp();
     PublicData::set_value( temperature_control_checksum, hotend_checksum, &t );
     t = THEPANEL->get_default_bed_temp();
+    PublicData::set_value( temperature_control_checksum, bed_checksum, &t );
+}
+void PrepareScreen::preheat_abs()
+{
+    float t = THEPANEL->get_default_hotend_temp_abs();
+    PublicData::set_value( temperature_control_checksum, hotend_checksum, &t );
+    t = THEPANEL->get_default_bed_temp_abs();
+    PublicData::set_value( temperature_control_checksum, bed_checksum, &t );
+}
+void PrepareScreen::preheat_petg()
+{
+    float t = THEPANEL->get_default_hotend_temp_petg();
+    PublicData::set_value( temperature_control_checksum, hotend_checksum, &t );
+    t = THEPANEL->get_default_bed_temp_petg();
     PublicData::set_value( temperature_control_checksum, bed_checksum, &t );
 }
 

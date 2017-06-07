@@ -68,6 +68,11 @@ class Panel : public Module {
         float get_jogging_speed(char axis) { return jogging_speed_mm_min[axis-'X']; }
         float get_default_hotend_temp() { return default_hotend_temperature; }
         float get_default_bed_temp() { return default_bed_temperature; }
+		
+		float get_default_hotend_temp_abs() { return default_hotend_temperature_abs; }
+        float get_default_bed_temp_abs() { return default_bed_temperature_abs; }
+		float get_default_hotend_temp_petg() { return default_hotend_temperature_petg; }
+        float get_default_bed_temp_petg() { return default_bed_temperature_petg; }
 
         // file playing from sd
         bool is_playing() const;
@@ -133,6 +138,12 @@ class Panel : public Module {
         float jogging_speed_mm_min[3];
         float default_hotend_temperature;
         float default_bed_temperature;
+		
+		float default_hotend_temperature_abs;
+        float default_bed_temperature_abs;
+		
+		float default_hotend_temperature_petg;
+        float default_bed_temperature_petg;
 
         std::string message;
         encoder_cb_t encoder_cb_fnc;

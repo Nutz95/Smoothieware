@@ -64,6 +64,11 @@
 
 #define hotend_temp_checksum       CHECKSUM("hotend_temperature")
 #define bed_temp_checksum          CHECKSUM("bed_temperature")
+#define hotend_temp_abs_checksum  CHECKSUM("hotend_temperature_abs")
+#define bed_temp_abs_checksum     CHECKSUM("bed_temperature_abs")
+#define hotend_temp_petg_checksum  CHECKSUM("hotend_temperature_petg")
+#define bed_temp_petg_checksum     CHECKSUM("bed_temperature_petg")
+
 #define panel_display_message_checksum CHECKSUM("display_message")
 #define laser_checksum             CHECKSUM("laser")
 #define display_extruder_checksum  CHECKSUM("display_extruder")
@@ -171,6 +176,11 @@ void Panel::on_module_loaded()
     default_hotend_temperature = THEKERNEL->config->value( panel_checksum, hotend_temp_checksum )->by_default(185.0f )->as_number();
     default_bed_temperature    = THEKERNEL->config->value( panel_checksum, bed_temp_checksum    )->by_default(60.0f  )->as_number();
 
+	default_hotend_temperature_abs = THEKERNEL->config->value( panel_checksum, hotend_temp_abs_checksum )->by_default(230.0f )->as_number();
+    default_bed_temperature_abs    = THEKERNEL->config->value( panel_checksum, bed_temp_abs_checksum    )->by_default(100.0f  )->as_number();
+	
+	default_hotend_temperature_petg = THEKERNEL->config->value( panel_checksum, hotend_temp_petg_checksum )->by_default(230.0f )->as_number();
+    default_bed_temperature_petg    = THEKERNEL->config->value( panel_checksum, bed_temp_petg_checksum    )->by_default(70.0f  )->as_number();
 
     this->up_button.up_attach(    this, &Panel::on_up );
     this->down_button.up_attach(  this, &Panel::on_down );

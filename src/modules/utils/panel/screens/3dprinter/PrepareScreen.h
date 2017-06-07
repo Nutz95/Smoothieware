@@ -23,6 +23,8 @@ public:
 
 private:
     void preheat();
+	void preheat_abs();
+	void preheat_petg();
     void cooldown();
     void setup_temperature_screen();
 

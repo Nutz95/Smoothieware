@@ -48,6 +48,7 @@ class Kernel {
 
         bool is_using_leds() const { return use_leds; }
         bool is_halted() const { return halted; }
+		bool is_playing() const { return playing;}
         bool is_grbl_mode() const { return grbl_mode; }
         bool is_ok_per_line() const { return ok_per_line; }
 
@@ -67,7 +68,6 @@ class Kernel {
         Configurator*     configurator;
         SimpleShell*      simpleshell;
 
-        int debug;
         SlowTicker*       slow_ticker;
         StepTicker*       step_ticker;
         Adc*              adc;
@@ -80,6 +80,7 @@ class Kernel {
         struct {
             bool use_leds:1;
             bool halted:1;
+			bool playing:1;
             bool grbl_mode:1;
             bool feed_hold:1;
             bool ok_per_line:1;
